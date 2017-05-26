@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Simple Multithreading: Simple-Kalman-Filter</title>
+<title>Simple Kalman Filter: Simple-Kalman-Filter</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Simple Multithreading
+   <div id="projectname">Simple Kalman Filter
    </div>
   </td>
  </tr>
@@ -62,7 +62,14 @@ $(function() {
 <div class="title">Simple-Kalman-Filter </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Basic implementation of a Kalman filter for control state estimation and sensor fusion </p>
+<div class="textblock"><p>Basic implementation of a Kalman filter for control state estimation and sensor fusion.</p>
+<p>The algorithm is based on <a href="http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull">the guide published at bzarg.com</a></p>
+<h3>Building</h3>
+<p>This filter implementation depends on <a href="https://github.com/LabDin/Simple-Matrix">Simple Matrix</a> project, which is added as a <a href="https://git-scm.com/docs/git-submodule">git submodule</a>.</p>
+<p>For building this library e.g. with <a href="https://gcc.gnu.org/">GCC</a> as a shared object, using reference <b>BLAS/LAPACK</b>, the following shell command (from root directory) would be required:</p>
+<p>&gt;$ gcc kalman_filters.c matrix/matrix.c -I. -I./matrix -shared -fPIC -o kalman_filters.so -lblas -llapack</p>
+<h3>Documentation</h3>
+<p>Descriptions of how the functions and data structures work are available at the <a href="http://www.stack.nl/~dimitri/doxygen/index.html">Doxygen</a>-generated <a href="https://labdin.github.io/Simple-Kalman-Filter/kalman__filters_8h.html">documentation pages</a> </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
