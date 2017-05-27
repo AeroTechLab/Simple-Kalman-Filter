@@ -1,8 +1,8 @@
-# Simple-Kalman-Filter
+# Simple Kalman Filter
 
 Basic implementation of a Kalman filter for control state estimation and sensor fusion.
 
-The algorithm is based on [the guide published at bzarg.com](http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull)
+The algorithm is based on [the guide published at **bzarg.com**](http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull)
 
 ### Building
 
