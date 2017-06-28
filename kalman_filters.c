@@ -23,7 +23,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "matrix.h"
+#include "matrix/matrix.h"
 
 #include "kalman_filters.h"
 
