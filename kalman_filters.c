@@ -22,6 +22,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "matrix/matrix.h"
 
@@ -54,6 +55,7 @@ KFilter Kalman_CreateFilter( size_t dimensionsNumber )
   
   newFilter->prediction = Mat_CreateSquare( dimensionsNumber, MATRIX_IDENTITY );
   newFilter->predictionCovariance = Mat_CreateSquare( dimensionsNumber, MATRIX_ZERO );
+  //Mat_Scale( newFilter->predictionCovariance, 1000.0, newFilter->predictionCovariance );
   newFilter->predictionCovarianceNoise = Mat_CreateSquare( dimensionsNumber, MATRIX_IDENTITY );
   
   newFilter->errorCovariance = Mat_CreateSquare( dimensionsNumber, MATRIX_ZERO );
@@ -161,6 +163,9 @@ double* Kalman_Update( KFilter filter, double* inputsList, double* result )
   // e = y - H*x
   Mat_Dot( filter->inputModel, MATRIX_KEEP, filter->state, MATRIX_KEEP, filter->error );                             // H[mxn] * x[nx1] -> e[mx1]
   Mat_Sum( filter->input, 1.0, filter->error, -1.0, filter->error );                                                 // y[mx1] - e[mx1] -> e[mx1]
+  
+  //fprintf( stderr, "%g, %g; %g, %g\r", Mat_GetElement( filter->input, 0, 0 ), Mat_GetElement( filter->input, 0, 1 ),
+  //                                     Mat_GetElement( filter->input, 1, 0 ), Mat_GetElement( filter->input, 1, 1 ) );
   
   // S = H*P*H' + R
   Mat_Dot( filter->inputModel, MATRIX_KEEP, filter->predictionCovariance, MATRIX_KEEP, filter->errorCovariance );    // H[mxn] * P[nxn] -> S[mxn]
