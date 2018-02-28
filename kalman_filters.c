@@ -106,10 +106,10 @@ void Kalman_AddInput( KFilter filter, size_t dimensionIndex )
   
   if( newInputsNumber > dimensionsNumber )
   {
-    Mat_Discard( filter->errorCovariance );
-    filter->errorCovariance = Mat_CreateSquare( newInputsNumber, MATRIX_ZERO );
-    Mat_Discard( filter->errorCovarianceNoise );  
-    filter->errorCovarianceNoise = Mat_CreateSquare( newInputsNumber, MATRIX_IDENTITY );
+    filter->errorCovariance = Mat_Resize( filter->errorCovarianceNoise, newInputsNumber, newInputsNumber );
+    
+    filter->errorCovarianceNoise = Mat_Resize( filter->errorCovarianceNoise, newInputsNumber, newInputsNumber );
+    Mat_SetElement( filter->errorCovarianceNoise, newInputIndex, newInputIndex, 1.0 );
 
     filter->gain = Mat_Resize( filter->gain, newInputsNumber, newInputsNumber );
     filter->error = Mat_Resize( filter->error, newInputsNumber, 1 );
@@ -163,9 +163,6 @@ double* Kalman_Update( KFilter filter, double* inputsList, double* result )
   // e = y - H*x
   Mat_Dot( filter->inputModel, MATRIX_KEEP, filter->state, MATRIX_KEEP, filter->error );                             // H[mxn] * x[nx1] -> e[mx1]
   Mat_Sum( filter->input, 1.0, filter->error, -1.0, filter->error );                                                 // y[mx1] - e[mx1] -> e[mx1]
-  
-  //fprintf( stderr, "%g, %g; %g, %g\r", Mat_GetElement( filter->input, 0, 0 ), Mat_GetElement( filter->input, 0, 1 ),
-  //                                     Mat_GetElement( filter->input, 1, 0 ), Mat_GetElement( filter->input, 1, 1 ) );
   
   // S = H*P*H' + R
   Mat_Dot( filter->inputModel, MATRIX_KEEP, filter->predictionCovariance, MATRIX_KEEP, filter->errorCovariance );    // H[mxn] * P[nxn] -> S[mxn]
