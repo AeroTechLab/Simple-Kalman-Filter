@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////
 //                                                                                  //
-//  Copyright (c) 2016-2017 Leonardo Consoni <consoni_2519@hotmail.com>             //
+//  Copyright (c) 2016-2020 Leonardo Consoni <leonardojc@protonmail.com>            //
 //                                                                                  //
 //  This file is part of Simple Kalman Filter.                                      //
 //                                                                                  //
@@ -37,50 +37,62 @@ typedef KFilterData* KFilter;
 
                                                                             
 /// @brief Creates and initializes internal matrices of Kalman filter data structure                                               
-/// @param[in] dimensionsNumber size (in elements) of the internal state vector                                    
+/// @param[in] statesNumber size (in elements) of the internal estimated state vector    
+/// @param[in] measurementsNumber size (in elements) of the measurements vector 
+/// @param[in] inputsNumber size (in elements) of the inputs vector 
 /// @return reference/pointer to allocated and initialized Kalman filter data structure
-KFilter Kalman_CreateFilter( size_t dimensionsNumber );
+KFilter Kalman_CreateFilter( size_t statesNumber, size_t measurementsNumber, size_t inputsNumber );
 
 /// @brief Deallocates internal data of given filter                              
 /// @param[in] filter reference to filter
 void Kalman_DiscardFilter( KFilter filter );
-
-/// @brief Appends field to internal input vector
-/// @param[in] filter reference to filter
-/// @param[in] dimensionIndex index of the state vector variable related to the added input field 
-void Kalman_AddInput( KFilter filter, size_t dimensionIndex );
                                                                   
-/// @brief Updates specified value of the given filter input vector
+/// @brief Defines correlation between input and state variables for prediction phase 
 /// @param[in] filter reference to filter
-/// @param[in] inputIndex index of the internal input vector where value will be updated
-/// @param[in] value new input value
-void Kalman_SetInput( KFilter filter, size_t inputIndex, double value );
-
-/// @brief Defines correlation between two state variables for prediction phase                             
-/// @param[in] filter reference to filter
-/// @param[in] outputIndex index (in state vector) of variable updated during predicition                                         
-/// @param[in] inputIndex index (in state vector) of variable used to calculate predicition
+/// @param[in] stateIndex index of the correspondent state variable in the internal state vector
+/// @param[in] inputIndex index of the input variable in the internal input vector
 /// @param[in] ratio output/input ratio desired on prediction
-void Kalman_SetPredictionFactor( KFilter filter, size_t outputIndex, size_t inputIndex, double ratio );
+void Kalman_SetInputFactor( KFilter filter, size_t stateIndex, size_t inputIndex, double ratio );
 
-/// @brief Sets maximum measure deviation for given input variable          
+/// @brief Defines correlation between two state variables for state transition on prediction phase                             
 /// @param[in] filter reference to filter
-/// @param[in] inputIndex index (in input vector)
+/// @param[in] newStateIndex index (in state vector) of variable updated during predicition 
+/// @param[in] oldStateIndex index (in state vector) of variable used to calculate predicition                                        
+/// @param[in] ratio output/input ratio desired on prediction
+void Kalman_SetTransitionFactor( KFilter filter, size_t newStateIndex, size_t oldStateIndex, double ratio );
+
+/// @brief Defines impact of a measurement variable for state estimation          
+/// @param[in] filter reference to filter
+/// @param[in] measureIndex index of the measure variable in the internal measure vector
+/// @param[in] stateIndex index of the correspondent state variable in the internal state vector
 /// @param[in] maxError maximum deviation for error modeling
-void Kalman_SetInputMaxError( KFilter filter, size_t inputIndex, double maxError );
+void Kalman_SetMeasureWeight( KFilter filter, size_t measureIndex, size_t stateIndex, double maxError );
+
+/// @brief Sets new value for a single measument
+/// @param[in] filter reference to filter
+/// @param[in] measureIndex index of the measure variable in the internal measure vector
+/// @param[in] value new value of the measurement variable
+void Kalman_SetMeasure( KFilter filter, size_t measureIndex, double value );
+
+/// @brief Sets new value for a single input
+/// @param[in] filter reference to filter
+/// @param[in] inputIndex index of the input variable in the internal input vector
+/// @param[in] value new value of the input variable
+void Kalman_SetInput( KFilter filter, size_t inputIndex, double value );
 
 /// @brief Runs prediction phase on given Kalman filter                      
 /// @param[in] filter reference to filter
-/// @param[in] result pointer to array where predicted internal state will be copied (NULL if not required)
+/// @param[in] inputsList array of input values (NULL if not updated)
+/// @param[out] result pointer to array where predicted internal state will be copied (NULL if not required)
 /// @return pointer to @a result array containing predicted filter state (NULL on errors)
-double* Kalman_Predict( KFilter filter, double* result );
+double* Kalman_Predict( KFilter filter, double* inputsList, double* result );
 
 /// @brief Runs update phase on given Kalman filter                              
 /// @param[in] filter reference to filter
-/// @param[in] inputsList array of input values (size in elements equal to the number of added inputs)                            
-/// @param[in] result pointer to array where updated internal state will be copied (NULL if not required)
+/// @param[in] measuresList array of measurement values (NULL if not updated)             
+/// @param[out] result pointer to array where updated internal state will be copied (NULL if not required)
 /// @return pointer to @a result array containing updated filter state (NULL on errors)
-double* Kalman_Update( KFilter filter, double* inputsList, double* result );
+double* Kalman_Update( KFilter filter, double* measuresList, double* result );
                                                                         
 /// @brief Resets internal filter matrices data
 /// @param[in] filter reference to filter
