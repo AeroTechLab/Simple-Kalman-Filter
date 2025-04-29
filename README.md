@@ -6,7 +6,7 @@ The algorithm is based on [the guide published at **bzarg.com**](http://www.bzar
 
 ### Building
 
-This filter implementation depends on [Simple Matrix](https://github.com/EESC-MKGroup/Simple-Matrix) project, which is added as a [git submodule](https://git-scm.com/docs/git-submodule).
+This filter implementation depends on [Simple Matrix](https://github.com/AeroTechLab/Simple-Matrix) project, which is added as a [git submodule](https://git-scm.com/docs/git-submodule).
 
 For building this library e.g. with [GCC](https://gcc.gnu.org/) as a shared object, using reference **BLAS/LAPACK**, the following shell command (from root directory) would be required:
 
@@ -14,4 +14,4 @@ For building this library e.g. with [GCC](https://gcc.gnu.org/) as a shared obje
 
 ### Documentation
 
-Descriptions of how the functions and data structures work are available at the [Doxygen](http://www.stack.nl/~dimitri/doxygen/index.html)-generated [documentation pages](https://eesc-mkgroup.github.io/Simple-Kalman-Filter/kalman__filters_8h.html)
+Descriptions of how the functions and data structures work are available at the [Doxygen](http://www.stack.nl/~dimitri/doxygen/index.html)-generated [documentation pages](https://AeroTechLab.github.io/Simple-Kalman-Filter/kalman__filters_8h.html)

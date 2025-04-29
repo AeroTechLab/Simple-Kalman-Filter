@@ -69,12 +69,12 @@ $(function() {
 <p>The algorithm is based on <a href="http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/#mjx-eqn-kalupdatefull">the guide published at <b>bzarg.com</b></a></p>
 <h2><a class="anchor" id="autotoc_md1"></a>
 Building</h2>
-<p>This filter implementation depends on <a href="https://github.com/EESC-MKGroup/Simple-Matrix">Simple Matrix</a> project, which is added as a <a href="https://git-scm.com/docs/git-submodule">git submodule</a>.</p>
+<p>This filter implementation depends on <a href="https://github.com/AeroTechLab/Simple-Matrix">Simple Matrix</a> project, which is added as a <a href="https://git-scm.com/docs/git-submodule">git submodule</a>.</p>
 <p>For building this library e.g. with <a href="https://gcc.gnu.org/">GCC</a> as a shared object, using reference <b>BLAS/LAPACK</b>, the following shell command (from root directory) would be required:</p>
 <p>&gt;$ gcc kalman_filters.c matrix/matrix.c -I. -I./matrix -shared -fPIC -o kalman_filters.so -lblas -llapack</p>
 <h2><a class="anchor" id="autotoc_md2"></a>
 Documentation</h2>
-<p>Descriptions of how the functions and data structures work are available at the <a href="http://www.stack.nl/~dimitri/doxygen/index.html">Doxygen</a>-generated <a href="https://eesc-mkgroup.github.io/Simple-Kalman-Filter/kalman__filters_8h.html">documentation pages</a> </p>
+<p>Descriptions of how the functions and data structures work are available at the <a href="http://www.stack.nl/~dimitri/doxygen/index.html">Doxygen</a>-generated <a href="https://AeroTechLab.github.io/Simple-Kalman-Filter/kalman__filters_8h.html">documentation pages</a> </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
